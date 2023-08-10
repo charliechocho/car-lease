@@ -49,6 +49,19 @@ def write_km(kilometers, today, balance):
     with open('mileage.db', 'w') as f:
         f.write(f'{kilometers} - {today} (Bal: {balance}')
 
+def show_more_data(allowed_daily_mileage, c, total_days, dayspassed, allowed_total_mileage, today, lease_return):
+    answ = input('Do you want to se more info around your mileage? (y/n) ')
+    if answ.lower() == 'y':
+        print(c['green'], f"\nStart of Car Lease for BMW FDE 08Z: {c['pink']}2023-07-31")
+        print(c['green'], f"\nTotal allowed daily mileage (km): {c['pink']}{'{0:.2f}'.format(allowed_daily_mileage)}\n")
+        print(c['green'], f"\nTotal lease days in contract: {c['pink']}{total_days}")
+        print(c['green'], f"\nDays since Car pick up: {c['pink']}{dayspassed}")
+        print(c['green'], f"\nAllowed mileage up until now (km): {c['pink']}{allowed_total_mileage}")
+        print(c['green'], f"\nDays left until Car return: {c['pink']}{today.daysTo(lease_return)}")
+    else:
+        print("Oki doki! You're all set!! ")
+
+
 mileage = check_file()
 
 km_to_date = input(f"What's on the odometer?(Last Entry: {mileage}): ")
@@ -59,11 +72,4 @@ chk_balance(c, balance)
 
 write_km(km_to_date, file_date, balance)
 
-
-print(c['green'], f"\nStart of Car Lease for BMW FDE 08Z: {c['pink']}2023-07-31")
-print(c['green'], f"\nTotal allowed daily mileage (km): {c['pink']}{'{0:.2f}'.format(allowed_daily_mileage)}\n")
-print(c['green'], f"\nTotal lease days in contract: {c['pink']}{total_days}")
-print(c['green'], f"\nDays since Car pick up: {c['pink']}{dayspassed}")
-print(c['green'], f"\nAllowed mileage up until now (km): {c['pink']}{allowed_total_mileage}")
-print(c['green'], f"\nDays left until Car return: {c['pink']}{today.daysTo(lease_return)}")
-
+show_more_data(allowed_daily_mileage, c, total_days, dayspassed, allowed_total_mileage, today, lease_return)
